@@ -53,6 +53,7 @@ const familyMap: Record<string, string> = {
 function App() {
     const [fruits, setFruits] = useState<Fruit[]>([]);
     const [filter, setFilter] = useState<string>("");
+    const [search, setSearch] = useState<string>("");
 
     const fetchData = () => {
         fetch("/api/api/fruit/all")
@@ -67,11 +68,21 @@ function App() {
 
     const families = Array.from(new Set(fruits.map(f => f.family)));
 
-    const filteredFruits = filter ? fruits.filter(f => f.family === filter) : fruits;
+    const filteredFruits = filter ?
+        fruits.filter(f => f.family === filter) : fruits
+        .filter(f => f.name.toLowerCase().includes(search.toLowerCase()));
+
 
     return (
         <>
             <h1>Owoce z Fruityvice API</h1>
+
+            <div>
+                <input type="text"
+                       placeholder="Szukaj po nazwie: "
+                       value={search}
+                       onChange={(e) => setSearch(e.target.value)}></input>
+            </div>
 
             <select value={filter} onChange={(e) => setFilter(e.target.value)}>
                 <option value="">Wszystkie</option>
