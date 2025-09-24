@@ -68,8 +68,8 @@ function App() {
 
     const families = Array.from(new Set(fruits.map(f => f.family)));
 
-    const filteredFruits = filter ?
-        fruits.filter(f => f.family === filter) : fruits
+    const filteredFruits = fruits
+        .filter(f => (filter ? f.family === filter : true))
         .filter(f => f.name.toLowerCase().includes(search.toLowerCase()));
 
 
